@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,6 +37,8 @@ public class VendaService {
     public Venda buscarVenda(Long id){
         return buscarPorId(id).orElseThrow();
     }
+
+    public List<Venda> buscarTodas(){ return vendaRepository.findAll();}
 
     public Venda adicionarItem(Venda venda, Produto produto, Long quantidade) {
         var itemVenda = itemVendaService.salvarItemVenda(venda, produto, quantidade);
@@ -63,4 +66,7 @@ public class VendaService {
         return vendaRepository.findById(id);
     }
 
+    public Long count() {
+        return vendaRepository.count();
+    }
 }

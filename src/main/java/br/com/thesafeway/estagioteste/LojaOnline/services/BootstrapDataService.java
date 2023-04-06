@@ -16,10 +16,13 @@ public class BootstrapDataService {
     private final ProdutoService produtoService;
     private final VendaService vendaService;
 
-    public BootstrapDataService(UsuarioService usuarioService, ProdutoService produtoService, VendaService vendaService) {
+    private final DashboardService dashboardService;
+
+    public BootstrapDataService(UsuarioService usuarioService, ProdutoService produtoService, VendaService vendaService, DashboardService dashboardService) {
         this.usuarioService = usuarioService;
         this.produtoService = produtoService;
         this.vendaService = vendaService;
+        this.dashboardService = dashboardService;
     }
 
     public void bootstrap() {
@@ -45,7 +48,21 @@ public class BootstrapDataService {
         // Adiciona alguns itens à venda
         vendaService.adicionarItem(venda2, produto3, 3L);
 
-        System.out.println(venda.getTotal());
-        System.out.println(venda2.getTotal());
+        // Cria outra venda
+        Venda venda3 = vendaService.salvarVenda(new VendaDto(usuario1));
+
+        // Adiciona alguns itens à venda
+        vendaService.adicionarItem(venda3, produto3, 5L);
+        vendaService.adicionarItem(venda3, produto1, 4L);
+
+        System.out.println("Resumo de vendas");
+        System.out.println("Quantidade total de vendas");
+        System.out.println(dashboardService.contarTotalVendas());
+        System.out.println("Preço total de vendas");
+        System.out.println(dashboardService.calcularTotalVendas());
+
+        System.out.println("Resumo de Produtos");
+        System.out.println("Quantidade total de produtos registrados");
+        System.out.println(dashboardService.contarTotalProdutos());
     }
 }

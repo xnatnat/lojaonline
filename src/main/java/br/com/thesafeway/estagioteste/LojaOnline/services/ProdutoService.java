@@ -6,6 +6,7 @@ import br.com.thesafeway.estagioteste.LojaOnline.repositories.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,7 @@ public class ProdutoService {
         return buscarPorId(id).orElseThrow();
     }
 
+    public List<Produto> buscarTodos(){ return produtoRepository.findAll();}
     public Produto editarProduto(ProdutoDto produtoDto){
         var produtoData = buscarProduto(produtoDto.getId());
         produtoData.setNome(produtoDto.getNome());
@@ -51,4 +53,8 @@ public class ProdutoService {
         return produtoRepository.findById(id);
     }
 
+
+    public Long count() {
+        return produtoRepository.count();
+    }
 }
